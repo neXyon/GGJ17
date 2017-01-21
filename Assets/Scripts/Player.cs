@@ -7,6 +7,9 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class Player : MonoBehaviour {
 
+  [SerializeField]
+  private float speed;
+
   private CharacterController characterController;
 
   public void Awake() {
