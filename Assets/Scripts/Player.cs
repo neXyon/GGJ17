@@ -8,11 +8,16 @@ using UnityEngine;
 public class Player : MonoBehaviour {
 
   [SerializeField]
-  private float speed;
+  private float speed = 13.8889f; // 13.88m/s = 50km/h
 
   private CharacterController characterController;
 
   public void Awake() {
     characterController = GetComponent<CharacterController>();
+  }
+
+  public void Update() {
+    Vector3 moveDelta = Vector3.forward * speed * Time.deltaTime;
+    characterController.Move(moveDelta);
   }
 }
