@@ -6,9 +6,16 @@ public class Surfer : MonoBehaviour {
   private int currentLane = 2;
   private LaneController laneController;
   private AudioSource audioSource;
+  public int lives;
+
+  public static int START_LIVES = 3;
+
+  public Level level;
 
 	// Use this for initialization
 	void Start () {
+    lives = START_LIVES;
+    level = GetComponent<Level>();
     laneController = GetComponent<LaneController>();
     audioSource = GetComponent<AudioSource>();
 	}
@@ -42,15 +49,28 @@ public class Surfer : MonoBehaviour {
       audioSource.pitch = LaneController.FREQUENCIES[currentLane];
     }
 
-    GameObject lane = laneController.lanes[currentLane];
+    GameObject laneObj = laneController.lanes[currentLane];
+    Lane lane = laneObj.GetComponent<Lane>();
 
-    float frequency = LaneController.FREQUENCIES[currentLane] * 2 * Mathf.PI;
-    float amplitude = lane.GetComponent<Lane>().Amplitude * 0.25f;
-    float phi = (lane.transform.position.z - v.z) * frequency;
+    float frequency = lane.Frequency * 2 * Mathf.PI;
+    float amplitude = lane.Amplitude * 0.25f;
+    float phi = (laneObj.transform.position.z - v.z) * frequency;
 
     v.y = -amplitude * Mathf.Sin(phi);
 
     transform.position = v;
     transform.rotation = Quaternion.AngleAxis(Mathf.Rad2Deg * Mathf.Atan2(-amplitude * frequency * Mathf.Cos(phi), 1), Vector3.right);
+  }
+
+  private void OnTriggerEnter(Collider other) {
+    Destroy(other.gameObject);
+    level.objects.Remove(other.gameObject);
+
+    lives -= 1;
+
+    if(lives < 0) {
+      // TODO Sce
+      UnityEngine.SceneManagement.SceneManager.LoadScene("GameOver");
+    }
   }
 }

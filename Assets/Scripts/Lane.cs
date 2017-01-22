@@ -9,13 +9,15 @@ public class Lane : MonoBehaviour {
 
   private static int NUM_WAVES = 10;*/
 
+  public static float FREQUENCY_SCALE = 10.0f;
+
   public float Frequency {
     get {
      return 1 / transform.localScale.y;
     }
     set {
       var v = transform.localScale;
-      v.y = 1 / value;
+      v.y = FREQUENCY_SCALE / value;
       transform.localScale = v;
     }
   }
@@ -47,10 +49,9 @@ public class Lane : MonoBehaviour {
   public Lane() {
   }*/
 
-  private Level level;
+  public Level level;
 
   public void Start() {
-    level = GetComponent<Level>();
     /*waves = new GameObject[NUM_WAVES];
 
     for (int i = 0; i < NUM_WAVES; i++) {

@@ -20,11 +20,14 @@ public class LaneController : MonoBehaviour {
   }
 
   private void Start() {
+    Level level = GetComponent<Level>();
+
     for (int i = 0; i < NUM_LANES; i++) {
       lanes[i] = GameObject.Instantiate(wavePrefab);
       Lane lane = lanes[i].GetComponent<Lane>();
       //lane.wavePrefab = wavePrefab;
       //Lane lane = lanes[0].GetComponent<Lane>();
+      lane.level = level;
       lane.Frequency = FREQUENCIES[i];
       lane.Amplitude = 0.5f;
       lane.Width = 2.0f;

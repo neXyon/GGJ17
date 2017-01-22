@@ -18,7 +18,7 @@ public class Level : MonoBehaviour {
   private float currentBeat;
 
   private Queue<Elements>[] lanes;
-  private List<GameObject> objects;
+  public List<GameObject> objects;
 
   public GameObject obstaclePrefab;
 
