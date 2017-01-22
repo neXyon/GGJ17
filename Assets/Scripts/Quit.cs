@@ -14,6 +14,10 @@ public class Quit : MonoBehaviour {
     if(Input.GetKeyDown(KeyCode.Escape)) {
       Application.Quit();
     }
+
+    if(Input.GetKeyDown(KeyCode.Return)) {
+      UnityEngine.SceneManagement.SceneManager.LoadScene("LaneTest");
+    }
 		
 	}
 }

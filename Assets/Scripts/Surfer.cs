@@ -6,18 +6,21 @@ public class Surfer : MonoBehaviour {
   private int currentLane = 2;
   private LaneController laneController;
   private AudioSource audioSource;
+  private AudioSource collisionSound;
   public int lives;
 
   public static int START_LIVES = 3;
 
   public Level level;
 
-	// Use this for initialization
-	void Start () {
+  // Use this for initialization
+  void Start () {
     lives = START_LIVES;
     level = GetComponent<Level>();
     laneController = GetComponent<LaneController>();
-    audioSource = GetComponent<AudioSource>();
+    audioSource = GetComponents<AudioSource>()[0];
+
+    collisionSound = GetComponents<AudioSource>()[1];
 	}
 	
 	// Update is called once per frame
@@ -38,7 +41,7 @@ public class Surfer : MonoBehaviour {
     else if (Input.GetKeyDown(KeyCode.F)) {
       switchLane = 3;
     }
-    else if (Input.GetKeyDown(KeyCode.Space)) {
+    else if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.G)) {
       switchLane = 4;
     }
 
@@ -65,6 +68,8 @@ public class Surfer : MonoBehaviour {
   private void OnTriggerEnter(Collider other) {
     Destroy(other.gameObject);
     level.objects.Remove(other.gameObject);
+
+    collisionSound.Play();
 
     lives -= 1;
 

@@ -26,7 +26,6 @@ public class Level : MonoBehaviour {
     int empty_lane = Random.Range(0, LaneController.NUM_LANES);
 
     float z = lanes[0].Count * Level.SPEED_FACTOR - currentBeat * BPM / 60.0f * Level.SPEED_FACTOR;
-    Debug.Log(z);
     
     for (int i = 0; i < LaneController.NUM_LANES; i++) {
       Elements element = Elements.Empty;
