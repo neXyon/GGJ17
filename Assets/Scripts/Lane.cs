@@ -11,11 +11,11 @@ public class Lane : MonoBehaviour {
 
   public float Frequency {
     get {
-      return transform.localScale.y;
+     return 1 / transform.localScale.y;
     }
     set {
       var v = transform.localScale;
-      v.y = value;
+      v.y = 1 / value;
       transform.localScale = v;
     }
   }
@@ -47,7 +47,10 @@ public class Lane : MonoBehaviour {
   public Lane() {
   }*/
 
+  private Level level;
+
   public void Start() {
+    level = GetComponent<Level>();
     /*waves = new GameObject[NUM_WAVES];
 
     for (int i = 0; i < NUM_WAVES; i++) {
@@ -60,7 +63,7 @@ public class Lane : MonoBehaviour {
 
   public void Update() {
     Vector3 v = transform.position;
-    v.z -= Time.deltaTime;
+    v.z -= Time.deltaTime * level.BPM / 60.0f * Level.SPEED_FACTOR;
 
     if(v.z < -transform.localScale.y) {
       v.z += transform.localScale.y;

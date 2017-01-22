@@ -5,9 +5,10 @@ using System.Text;
 using UnityEngine;
 
 public class LaneController : MonoBehaviour {
-  private GameObject[] lanes;
+  public GameObject[] lanes;
 
-  private static int NUM_LANES = 5;
+  public static int NUM_LANES = 5;
+  public static float LANE_DISTANCE = 2.25f;
 
   [SerializeField]
   private GameObject wavePrefab;
@@ -27,7 +28,7 @@ public class LaneController : MonoBehaviour {
       lane.Frequency = FREQUENCIES[i];
       lane.Amplitude = 0.5f;
       lane.Width = 2.0f;
-      lanes[i].transform.position += new Vector3((i - 2) * 2.25f, 0);
+      lanes[i].transform.position += new Vector3((i - NUM_LANES / 2) * LANE_DISTANCE, 0);
     }
   }
 

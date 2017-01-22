@@ -15,6 +15,8 @@ public class Surfer : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+    Vector3 v = transform.position;
+
     int switchLane = -1;
 
 		if(Input.GetKeyDown(KeyCode.A)) {
@@ -35,11 +37,20 @@ public class Surfer : MonoBehaviour {
 
     if(switchLane != -1 && switchLane != currentLane) {
       currentLane = switchLane;
-      Vector3 v = transform.position;
-      v.x = (currentLane - 2) * 2.25f;
-      transform.position = v;
+      v.x = (currentLane - LaneController.NUM_LANES / 2) * LaneController.LANE_DISTANCE;
 
       audioSource.pitch = LaneController.FREQUENCIES[currentLane];
     }
+
+    GameObject lane = laneController.lanes[currentLane];
+
+    float frequency = LaneController.FREQUENCIES[currentLane] * 2 * Mathf.PI;
+    float amplitude = lane.GetComponent<Lane>().Amplitude * 0.25f;
+    float phi = (lane.transform.position.z - v.z) * frequency;
+
+    v.y = -amplitude * Mathf.Sin(phi);
+
+    transform.position = v;
+    transform.rotation = Quaternion.AngleAxis(Mathf.Rad2Deg * Mathf.Atan2(-amplitude * frequency * Mathf.Cos(phi), 1), Vector3.right);
   }
 }
